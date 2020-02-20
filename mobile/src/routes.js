@@ -10,6 +10,7 @@ const Routes = createAppContainer(
       screen: Main,
       navigationOptions: {
         title: 'Titulo para Main',
+        headerTitleAlign: 'center',
       },
     },
     Maps: {
@@ -22,7 +23,7 @@ const Routes = createAppContainer(
     defaultNavigationOptions: {
       headerTintColor: '#fff',
       headerStyle: {
-        backgroundColor: '#7F00FF',
+        backgroundColor: '#7D40E7',
       },
     },
   })

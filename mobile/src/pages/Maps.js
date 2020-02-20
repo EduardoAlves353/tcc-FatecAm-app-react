@@ -1,7 +1,7 @@
 import React from 'react';
 import MapView from 'react-native-maps';
 
-function Maps() {
+function Maps({ navigation }) {
   return <MapView style={{ flex: 1 }} />
 }
 
