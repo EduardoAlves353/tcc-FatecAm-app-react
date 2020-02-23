@@ -1,61 +1,19 @@
 import React from 'react';
-import { StyleSheet, Text, View, Button, Easing } from 'react-native';
-import { NavigationContainer, useIsFocused } from '@react-navigation/native';
+import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator, TransitionPresets } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import Maps from './Maps';
+import HomeScreen from '../screens/HomeScreen';
+import SettingsScreen from '../screens/SettingsScreen';
+import FeedScreen from '../screens/FeedScreen';
+import DetailsScreen from '../screens/DetailsScreen';
 
 import { Ionicons } from '@expo/vector-icons';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 const HomeStack = createStackNavigator();
-
-const HomeScreen = ({ navigation }) => {
-  return(
-    <View style={styles.container}>
-      <Text>HomeScreen</Text>
-      <Button title="Go to Details Screen" 
-      onPress={()=>navigation.navigate('Details')}/>
-    </View>
-  );
-};
-const SettingsScreen = ({ navigation }) => {
-  const isFocused = useIsFocused();
-  navigation.setOptions({
-    headerRight: ()=>(
-      <Button title="Save" onPress={()=>{
-        navigation.replace('Settings');
-      }}/>
-    )
-  });
-  return(
-    <View style={styles.container}>
-      <Text style={{color:isFocused?'green':'black'}}>SettingsScreen</Text>
-      <Button title="Go to Home Screen" 
-      onPress={()=>navigation.goBack()}/>
-    </View>
-  );
-};
-
-const FeedScreen = ({ navigation }) => {
-  return(
-    <View style={styles.container}>
-      <Text>FeedScreen</Text>
-    </View>
-  );
-};
-
-const DetailsScreen = ({ navigation }) => {
-  return(
-    <View style={styles.container}>
-      <Text>DetailsScreen</Text>
-      <Button title="Go to Home Screen" 
-      onPress={()=>navigation.goBack()}/>
-    </View>
-  );
-};
 
 const HomeStackNavigator = ({ navigation, route })=>{
   // deixa invisivel a tab navigation
@@ -94,6 +52,8 @@ const HomeTabNavigator = ({ navigation, route }) => {
           let iconName
           if (route.name == 'Home') {
             iconName = 'ios-home'
+          } else if (route.name == 'Feed') {
+            iconName = 'logo-rss'
           } else if (route.name == 'Map') {
             iconName = 'ios-map'
           } else if (route.name == 'Settings') {
@@ -104,29 +64,11 @@ const HomeTabNavigator = ({ navigation, route }) => {
       })}
     >
       <Tab.Screen name="Home" component={HomeStackNavigator}/>
+      <Tab.Screen name="Feed" component={FeedScreen}/>
       <Tab.Screen name="Map" component={Maps}/>
       <Tab.Screen name="Settings" component={SettingsScreen}/>
     </Tab.Navigator>
   );
-};
-
-const config = {
-  animation: 'spring',
-  config: {
-    stiffness: 1000,
-    damping: 500,
-    mass: 3,
-    overshootClamping: false,
-    restDisplacementThreshold: 0.01,
-    restSpeedThreshold: 0.01,
-  },
-};
-const closeConfig = {
-  animation: 'timing',
-  config: {
-    duration: 400,
-    easing: Easing.linear,
-  }
 };
 
 function getHeaderTitle(route) {
@@ -135,6 +77,8 @@ function getHeaderTitle(route) {
   switch (routeName) {
     case "Home":
     return "Home";
+    case "Feed":
+    return "Feed";
     case "Map":
     return "Map";
     case "Settings":
@@ -172,12 +116,3 @@ export default function Main() {
     </Stack.Navigator>
   </NavigationContainer>;
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    //backgroundColor: '#7D40E7',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
