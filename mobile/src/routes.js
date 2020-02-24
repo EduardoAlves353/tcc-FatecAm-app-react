@@ -11,6 +11,7 @@ const Routes = createAppContainer(
     Main: {
       screen: Main,
       navigationOptions: ({ navigation })=>({
+        headerShown: false,// tem que tirar para funcionar os debaixo
         title: 'Titulo para Main',
         headerTitleAlign: 'center',
         headerRight:  () => (<View>
