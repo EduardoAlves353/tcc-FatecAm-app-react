@@ -1,3 +1,5 @@
+require('dotenv').config (); 
+
 const express = require('express');
 const mongoose = require('mongoose');
 
@@ -5,7 +7,7 @@ const routes = require('./routes');
 
 const app = express();
 
-mongoose.connect('mongodb+srv://adotapet:petadota@adotapet-l3ztt.mongodb.net/adotaBD?retryWrites=true&w=majority', {
+mongoose.connect(`mongodb+srv://${process.env.MONGO_USERNAME}:${process.env.MONGO_PASSWORD}@adotapet-l3ztt.mongodb.net/adotaBD?retryWrites=true&w=majority`, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
