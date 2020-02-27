@@ -11,9 +11,11 @@ const routes = express.Router();
 const upload = multer(uploadConfig);
 
 routes.post('/sessions', SessionController.store);
+// routes.put('/sessions/:id', SessionController.update);
 
 routes.get('/spots', SpotController.index);
 routes.post('/spots', upload.single('thumbnail'), SpotController.store);
+routes.put('/spots/:id', upload.single('thumbnail'), SpotController.update);
 
 routes.get('/dashboard', DashboardController.show);
 

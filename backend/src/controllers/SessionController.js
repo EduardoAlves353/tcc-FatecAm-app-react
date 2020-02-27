@@ -19,5 +19,28 @@ module.exports = {
     }
 
     return res.json(user);
-  }
+  },
+
+  // async update(req, res) {
+  //   const { id } = req.params;
+
+  //   const { 
+  //     email,
+  //     senha, nome, contato
+  //    } = req.body;
+
+  //   let user = await User.findOne({ _id: id });
+
+  //   if (user) {
+  //     user = await User.updateOne(user, { 
+  //       email,
+  //       senha, nome, contato
+  //      });
+  //   }
+
+  //   return res.json({
+  //     modified: user ? user.nModified : null,
+  //     ok: user ? user.ok : null,
+  //   });
+  // }
 };
