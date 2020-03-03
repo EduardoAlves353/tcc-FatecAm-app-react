@@ -1,21 +1,6 @@
-node_modules/**/*
-.expo/*
-npm-debug.*
-*.jks
-*.p8
-*.p12
-*.key
-*.mobileprovision
-*.orig.*
-web-build/
-web-report/
+node_modules
+yarn-error.log
 
-# macOS
-.DS_Store
-
-# yarn-error.log
-
-# //
 .env
 
 uploads/*

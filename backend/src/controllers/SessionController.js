@@ -3,6 +3,16 @@ const User = require('../models/User');
 // Index (todo), show (mostrar um), store (criar), update (modificar), destroy
 
 module.exports = {
+  async index(req, res) {
+    const { 
+      email
+     } = req.body;
+
+    let user = await User.findOne({ email });
+
+    return res.json(user);
+  },
+
   async store(req, res) {
     const { 
       email,
@@ -11,12 +21,13 @@ module.exports = {
 
     let user = await User.findOne({ email });
 
-    if (!user) {
-      user = await User.create({ 
-        email,
-        senha, nome, contato
-       });
+    if (user) {
+      return res.json(null);
     }
+    user = await User.create({ 
+      email,
+      senha, nome, contato
+    });
 
     return res.json(user);
   },
