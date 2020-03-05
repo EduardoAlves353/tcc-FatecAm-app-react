@@ -1,19 +1,32 @@
-import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { SafeAreaView, StyleSheet, Text, Image, ScrollView, AsyncStorage } from 'react-native';
 
-export default function FeedScreen({ navigation }) {
+import SpotList from '../components/SpotList';
+
+export default function List() {
+  const [racas, setRacas] = useState([]);
+
+  useEffect(() => {
+    AsyncStorage.getItem('raca').then(storagedRacas => {
+      const racaArraw = storagedRacas.split(',').map(raca => raca.trim());
+
+      setRacas(racaArraw);
+    })
+  }, []);
+
   return (
-    <View style={styles.container}>
-      <Text>FeedScreen</Text>
-    </View>
-  );
+    <SafeAreaView style={styles.container}>
+      {/* <Image style={styles.logo} source={logo} /> */}
+
+      <ScrollView>
+        {racas.map(raca => <SpotList key={raca} raca={raca} />)}
+      </ScrollView>
+    </SafeAreaView>
+  )
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    //backgroundColor: '#7D40E7',
-    alignItems: 'center',
-    justifyContent: 'center',
   },
 });

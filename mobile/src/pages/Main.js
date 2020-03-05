@@ -41,10 +41,10 @@ const MainTabs = (props) => {
     <Tab.Navigator
     tabBarOptions={{
       activeTintColor: '#fff',
-      inactiveTintColor: '#c7a4ff',
-      // showLabel: focused?true:false,
+      inactiveTintColor: '#999',
+      showLabel: false, //bloqueia o texto tabs
       style: {
-        backgroundColor: '#7D40E7',
+        backgroundColor: '#f05a5b',
         borderColor: '#fff',
         borderWidth: 2,
         borderTopWidth: 4,

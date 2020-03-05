@@ -8,7 +8,7 @@ module.exports = {
       email
      } = req.body;
 
-    let user = await User.findOne({ email });
+    const user = await User.findOne({ email });
 
     return res.json(user);
   },
