@@ -46,7 +46,7 @@ const Routes = createAppContainer(
       // },
       gestureEnabled: true,
       gestureDirection: "horizontal",
-      ...TransitionPresets.SlideFromRightIOS,
+      ...TransitionPresets.SlideFromRightIOS,// esses tres sao temporario
     },
   })
 );

@@ -24,6 +24,10 @@ const HomeStack = ({navigation, route}) => {
   return(
     <Stack.Navigator
       screenOptions={{
+        headerTitleAlign: 'center',
+        headerStyle: {
+          backgroundColor: '#f5f5f5',
+        },
         gestureEnabled: true,
         gestureDirection: "horizontal",
         ...TransitionPresets.SlideFromRightIOS,

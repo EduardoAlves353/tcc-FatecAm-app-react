@@ -14,6 +14,7 @@ const SpotSchema = new mongoose.Schema({
   endereco: String,
   outros: String,
   descricao: String,
+  adotado: String,
   user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User'

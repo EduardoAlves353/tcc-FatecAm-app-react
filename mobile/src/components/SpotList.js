@@ -13,7 +13,7 @@ function SpotList({ raca, navigation }) {
         params: { raca }
       })
 
-      setSpots(response.data);
+      setSpots(response.data.reverse());
     }
 
     loadSpots();

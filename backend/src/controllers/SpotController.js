@@ -5,6 +5,14 @@ const Spot = require('../models/Spot');
 
 module.exports = {
   async index(req, res) {
+    const adotado = 'false';
+
+    const spots = await Spot.find({ adotado });
+
+    return res.json(spots);
+  },
+
+  async show(req, res) {
     const { raca } = req.query;
 
     const spots = await Spot.find({ raca });
@@ -17,7 +25,7 @@ module.exports = {
     const { 
       company, nome, raca, porte, filhote,
       idade, castrado, sexo, contato, endereco, outros,
-      descricao,
+      descricao, adotado
      } = req.body;
     const { user_id } = req.headers;
 
@@ -32,7 +40,8 @@ module.exports = {
       thumbnail: filename,
       company, nome, raca, porte, filhote,
       idade, castrado, sexo, contato, endereco, outros,
-      descricao
+      descricao,
+      adotado: false
     });
     console.log(req.body);
     console.log(req.file);

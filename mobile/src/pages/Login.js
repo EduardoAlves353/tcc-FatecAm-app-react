@@ -3,13 +3,13 @@ import { BackHandler, View, AsyncStorage, KeyboardAvoidingView, Platform, Image,
 
 import api from '../services/api';
 
-// import logo from '../assets/';
+import logo from '../assets/logoPet.png';
 
 export default function Login({ navigation }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   //Teste
-  AsyncStorage.setItem('raca', 'Golden, Plano');
+  AsyncStorage.setItem('raca', 'Golden, Plano, Planta');
 
   useEffect(() => {
     AsyncStorage.getItem('user').then(user => {
@@ -47,7 +47,7 @@ export default function Login({ navigation }) {
 
   return(
     <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : null} style={styles.container}>
-      {/* <Image source={logo} /> */}
+      <Image style={styles.logo} source={logo} />
 
       <View style={styles.form}>
         <Text style={styles.label}>SEU E-MAIL *</Text>
@@ -91,6 +91,13 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: "center",
+    marginBottom: 100,
+  },
+
+  logo: {
+    width: 150,
+    height: 150,
+    borderRadius: 80,
   },
 
   form: {
