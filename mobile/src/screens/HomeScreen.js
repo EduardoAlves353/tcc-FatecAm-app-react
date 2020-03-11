@@ -1,34 +1,63 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, FlatList, TouchableOpacity, Image } from 'react-native';
+import { View, Text, StyleSheet, FlatList, ActivityIndicator, TouchableOpacity, Image } from 'react-native';
 
 import perfil from '../assets/perfilPet.png';
 
 import api from '../services/api';
 
 export default function HomeScreen({ navigation }) {
-  const [feed, setFeed] = useState([]);
   const adotado = 'false';
+  let reverseData;
+  const [feed, setFeed] = useState([]);
+  const [page, setPage] = useState(1);
+  const [total, setTotal] = useState(0);
+  const [loading, setLoading] = useState(false);
+  const [refreshing, setRefreshing] = useState(false);
+
+  async function loadPage(pageNumber = page, shouldRefresh = false) {
+    if (total && pageNumber > total) return;
+    console.log(pageNumber);
+    setLoading(true);
+
+    const response = await api.get(`/spot`,{
+      params: {
+        adotado,
+        _page: pageNumber,
+       }
+    })
+    reverseData = response.data.reverse();
+    console.log(reverseData[0]);
+    console.log(pageNumber);
+
+    setTotal(Math.floor(reverseData.length / 2)); // 2 para teste
+    setFeed(shouldRefresh ? reverseData : [...feed, ...reverseData]);console.log(total);
+    setPage(pageNumber + 1);
+    setLoading(false);
+  }
 
   useEffect(() => {
-    async function loadFeed() {
-      const response = await api.get('/spot',{
-        params: {
-          adotado,
-         }
-      })
-
-      setFeed(response.data.reverse());
-    }
-
-    loadFeed();
+    loadPage();
   }, []);
+
+  async function refreshList() {
+    setRefreshing(true);
+
+    await loadPage(1, true);
+
+    setRefreshing(false);
+  }
+
   return (
     <View style={styles.container}>
       <FlatList 
         data={feed}
         keyExtractor={post => post._id}
-        // onEndReached={() => loadPage()}
-        // onEndReachedThreshold={0.1}
+        onEndReached={() => loadPage()}
+        onEndReachedThreshold={0.1}
+        onRefresh={refreshList}
+        refreshing={refreshing}
+        ListFooterComponent={loading && <ActivityIndicator size="small" color="#999"
+        style={styles.load} />}
         renderItem={({ item }) => (
           <View style={styles.list}>
             <View style={styles.header}>
@@ -85,6 +114,10 @@ const styles = StyleSheet.create({
     height: 32,
     borderRadius: 16,
     marginRight: 10,
+  },
+
+  load: {
+    margin: 30
   },
 
   company: {
