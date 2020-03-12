@@ -7,7 +7,7 @@ import api from '../services/api';
 
 export default function HomeScreen({ navigation }) {
   const adotado = 'false';
-  let reverseData;
+
   const [feed, setFeed] = useState([]);
   const [page, setPage] = useState(1);
   const [total, setTotal] = useState(0);
@@ -16,21 +16,19 @@ export default function HomeScreen({ navigation }) {
 
   async function loadPage(pageNumber = page, shouldRefresh = false) {
     if (total && pageNumber > total) return;
-    console.log(pageNumber);
+    
     setLoading(true);
-
+    
     const response = await api.get(`/spot`,{
       params: {
         adotado,
         _page: pageNumber,
        }
-    })
-    reverseData = response.data.reverse();
-    console.log(reverseData[0]);
-    console.log(pageNumber);
+    });
+    // d = response.data.length;
+    setTotal(Math.floor(response.data.length / 2)); // 2 para teste
 
-    setTotal(Math.floor(reverseData.length / 2)); // 2 para teste
-    setFeed(shouldRefresh ? reverseData : [...feed, ...reverseData]);console.log(total);
+    setFeed(shouldRefresh ? response.data.reverse() : [...feed, ...response.data]);
     setPage(pageNumber + 1);
     setLoading(false);
   }
