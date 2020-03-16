@@ -7,6 +7,10 @@ import api from '../services/api';
 
 export default function HomeScreen({ navigation }) {
   const adotado = 'false';
+  const [d, setD] = useState(false);
+  const [reverseData, setReverseData] = useState([]);
+  const [ini, setIni] = useState(0);
+  const [fim, setFim] = useState(3);
 
   const [feed, setFeed] = useState([]);
   const [page, setPage] = useState(1);
@@ -15,7 +19,7 @@ export default function HomeScreen({ navigation }) {
   const [refreshing, setRefreshing] = useState(false);
 
   async function loadPage(pageNumber = page, shouldRefresh = false) {
-    if (total && pageNumber > total) return;
+    if (total && pageNumber > total) return;console.log('inicio');
     
     setLoading(true);
     
@@ -27,15 +31,22 @@ export default function HomeScreen({ navigation }) {
     });
     // d = response.data.length;
     setTotal(Math.floor(response.data.length / 2)); // 2 para teste
-
-    setFeed(shouldRefresh ? response.data.reverse() : [...feed, ...response.data]);
-    setPage(pageNumber + 1);
-    setLoading(false);
+    
+    if (d == true) {console.log('if');
+      setFeed(shouldRefresh ? reverseData : [...feed, ...reverseData.slice(ini, fim)]);console.log(reverseData);
+      setIni(fim); setFim(fim + 2);
+      setPage(pageNumber + 1);console.log(feed);
+      setLoading(false);
+      return;
+    } else {console.log('else');
+      setReverseData(response.data.reverse());console.log(reverseData);
+      setD(true);console.log(d);
+    }console.log('fim');
   }
 
   useEffect(() => {
     loadPage();
-  }, []);
+  }, [d]);
 
   async function refreshList() {
     setRefreshing(true);
