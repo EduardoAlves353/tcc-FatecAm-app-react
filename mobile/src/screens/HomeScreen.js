@@ -30,11 +30,11 @@ export default function HomeScreen({ navigation }) {
        }
     });
     // d = response.data.length;
-    setTotal(Math.floor(response.data.length / 2)); // 2 para teste
-    
+    setTotal(Math.floor((response.data.length / 2)+ 1)); // 2 para teste
+    console.log('dddddddddddddddddddddddddddddddddd', total);
     if (d == true) {console.log('if');
-      setFeed(shouldRefresh ? reverseData : [...feed, ...reverseData.slice(ini, fim)]);console.log(reverseData);
-      setIni(fim); setFim(fim + 2);
+      setFeed(shouldRefresh ? reverseData.slice(ini, fim) : [...feed, ...reverseData.slice(ini, fim)]);console.log(reverseData);
+      setIni(fim); setFim(fim + 3);
       setPage(pageNumber + 1);console.log(feed);
       setLoading(false);
       return;
@@ -51,6 +51,8 @@ export default function HomeScreen({ navigation }) {
   async function refreshList() {
     setRefreshing(true);
 
+    setIni(0); setFim(3);
+    setD(false);
     await loadPage(1, true);
 
     setRefreshing(false);
